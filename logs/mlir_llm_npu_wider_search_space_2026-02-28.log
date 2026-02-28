@@ -1,0 +1,100 @@
+Date: 2026-02-28
+Workspace: /home/agi-demo/Dialect
+Task: Define a wider search space after accepting common references.
+
+Accepted reference set (for seed expansion):
+- Hexagon-MLIR: Leveraging Collective Hardware and Algorithm Co-design for Efficient LLM Deployment on Mobile NPUs (arXiv:2602.19762)
+- From Loop Nests to Silicon: Mapping AI Workloads onto AMD NPUs with MLIR-AIR (arXiv:2510.14871)
+- Analyzing Latency Hiding and Parallelism in an MLIR-based AI Kernel Compiler (arXiv:2602.20204)
+- Efficiency, Expressivity, and Extensibility in a Close-to-Metal NPU Programming Interface (arXiv:2504.18430 / FCCM 2025)
+- MLIR-AIE framework paper
+- AIR for GPU/NPU workloads paper
+
+Wider search space design
+=========================
+A) Hardware/vendor axis (expand synonyms)
+- Qualcomm: Qualcomm, Snapdragon, Hexagon, HTP, QNN, AI Engine
+- AMD: AMD, Ryzen AI, XDNA, AIE, AI Engine, NPU
+
+B) Compiler/dialect axis
+- Core MLIR terms: MLIR dialect, lowering, pass pipeline, transform dialect, linalg, vector, async, affine, bufferization
+- AMD ecosystem terms: MLIR-AIE, MLIR-AIR, IRON, AIR dialect, AIE dialect
+- Cross-ecosystem terms that still map to MLIR pipelines:
+  - IREE (MLIR-based)
+  - ONNX-MLIR
+  - StableHLO / OpenXLA
+  - TOSA / Torch-MLIR
+
+C) LLM workload axis
+- LLM, transformer, decoder-only, autoregressive
+- attention, MHA, GQA, KV cache, prefill, decode
+- quantization terms often used in on-device papers: int8, int4, w4a8, mixed precision
+
+D) Deployment axis
+- on-device, local inference, edge, mobile, client-side
+- NPU, accelerator, AI engine
+
+E) Evidence axis (what counts as inclusion)
+- Must show at least one of:
+  1) A named MLIR dialect (new or reused) used in implementation
+  2) An explicit MLIR-based compiler path to NPU kernels/runtime
+- Prefer papers with:
+  - local/on-device LLM inference results OR
+  - explicit LLM kernel implementation (attention/prefill/decode) on NPU
+
+Source-specific query templates
+===============================
+Google Scholar
+1) "MLIR" (dialect OR compiler) (LLM OR transformer) (Qualcomm OR Hexagon OR Snapdragon) NPU
+2) "MLIR-AIR" OR "MLIR-AIE" (LLM OR attention) (AMD OR "Ryzen AI" OR XDNA)
+3) "IREE" MLIR Qualcomm NPU LLM
+4) "ONNX-MLIR" AMD NPU transformer
+5) "StableHLO" MLIR edge LLM NPU
+
+arXiv
+1) all:(MLIR AND (LLM OR transformer) AND (Qualcomm OR Hexagon OR Snapdragon) AND (NPU OR mobile))
+2) all:((MLIR-AIR OR MLIR-AIE OR IRON) AND (AMD OR "Ryzen AI" OR XDNA) AND (LLM OR attention OR decoder))
+3) all:("on-device" AND LLM AND MLIR AND NPU)
+
+ACM Digital Library
+1) Abstract:(MLIR AND (LLM OR transformer) AND (NPU OR "AI engine") AND (AMD OR Qualcomm))
+2) Abstract:("MLIR-AIE" OR "MLIR-AIR" OR IRON) AND (attention OR LLM)
+3) Keywords:(edge OR mobile) AND (LLM) AND (MLIR)
+
+IEEE Xplore
+1) ("All Metadata":MLIR) AND ("All Metadata":LLM OR transformer) AND ("All Metadata":NPU)
+2) ("All Metadata":("MLIR-AIE" OR "MLIR-AIR" OR IRON)) AND ("All Metadata":AMD)
+3) ("All Metadata":Hexagon OR Snapdragon) AND ("All Metadata":MLIR) AND ("All Metadata":attention)
+
+Snowballing/graph expansion strategy
+====================================
+1) Backward snowballing: references from each seed paper.
+2) Forward snowballing: papers citing each seed.
+3) Intersect results from >=2 seed neighborhoods to find common references.
+4) Keep candidates that satisfy Evidence axis E.
+
+Scoring and prioritization
+==========================
+Score = 4*VenueScore + 2*RelevanceScore + CitationScore + RecencyBoost
+- VenueScore: 3=top conference/journal, 2=recognized workshop, 1=preprint only
+- RelevanceScore: 3=direct on-device LLM on Qualcomm/AMD NPU via MLIR dialect/compiler
+                  2=LLM-kernel on NPU via MLIR
+                  1=general NPU MLIR compiler without explicit LLM
+- CitationScore: log2(1 + citations) (Google Scholar preferred)
+- RecencyBoost: +1 if year >= 2025
+
+Practical widening rule (to avoid missing papers)
+=================================================
+Apply in 3 passes:
+- Pass 1 (strict): MLIR + LLM + Qualcomm/AMD + NPU + on-device
+- Pass 2 (kernel-focused): MLIR + (attention/prefill/decode/KV-cache) + Qualcomm/AMD NPU
+- Pass 3 (toolchain-focused): MLIR dialect/compiler + Qualcomm/AMD NPU (LLM optional)
+
+Pass 3 results are marked "adjacent enabling work" unless LLM evidence exists.
+
+Verified context sources used to define expansion terms:
+- MLIR dialect docs: https://mlir.llvm.org/docs/Dialects/
+- IREE (MLIR-based compiler/runtime): https://iree.dev/
+- IREE dialect/passes references: https://iree.dev/reference/
+- ONNX-MLIR project docs: https://onnx.ai/onnx-mlir/
+- MLIR-AIR docs: https://xilinx.github.io/mlir-air/

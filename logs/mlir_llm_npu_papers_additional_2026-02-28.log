@@ -1,0 +1,67 @@
+Date: 2026-02-28
+Workspace: /home/agi-demo/Dialect
+Task: Find additional papers beyond prior shortlist on MLIR dialect/compiler work for Qualcomm and AMD NPUs, prioritizing conference papers and citation signals.
+
+Sources used in this pass:
+- arXiv
+- ACM (via DOI/dblp metadata)
+- IEEE (via DOI/dblp metadata)
+- Google Scholar (availability checks via source cross-links; direct citation counts available only for ARIES from prior pass)
+
+Important corrections/notes:
+- Previous pass had one mistaken arXiv ID mapping from noisy search results. This pass re-validated each added paper directly by title/abstract pages.
+- This area is very recent (2025-2026), so citation counts are sparse/unavailable for many items.
+
+Search trail highlights:
+- Direct arXiv validation:
+  - https://arxiv.org/abs/2602.19762
+  - https://arxiv.org/abs/2602.20204
+  - https://arxiv.org/abs/2510.14871
+  - https://arxiv.org/abs/2504.18430
+- IEEE conference metadata for IRON paper:
+  - https://dblp.org/rec/conf/fccm/HunhoffMDBBNFLV25
+  - DOI: https://doi.org/10.1109/FCCM62733.2025.00043
+- ACM conference metadata for ARIES:
+  - https://dblp.org/rec/conf/fpga/ZhuangXCZYMZ025
+  - DOI: https://dl.acm.org/doi/10.1145/3706628.3708870
+- Additional ACM workshop metadata (adjacent, not LLM-specific):
+  - https://www.research.ed.ac.uk/en/publications/programmer-productivity-and-performance-on-amds-ai-engines-offloa/
+  - DOI: https://doi.org/10.1145/3731599.3767414
+  - https://www.research.ed.ac.uk/en/publications/seamless-acceleration-of-fortran-intrinsics-via-amd-ai-engines
+  - DOI: https://doi.org/10.1145/3706628.3708854
+
+Additional papers found (beyond previous shortlist):
+1) Analyzing Latency Hiding and Parallelism in an MLIR-based AI Kernel Compiler
+   - arXiv: https://arxiv.org/abs/2602.20204
+   - Status: Accepted at MLBench workshop as part of ASPLOS 2026 (per arXiv comments)
+   - Relevance: Qualcomm-associated MLIR compiler pipeline analysis (Vec/MT/DB), NPU-targeted AI kernels.
+
+2) From Loop Nests to Silicon: Mapping AI Workloads onto AMD NPUs with MLIR-AIR
+   - arXiv: https://arxiv.org/abs/2510.14871
+   - Status: Preprint (2025); referenced as citation target by MLIR-AIR docs
+   - Relevance: Introduces AIR dialect; includes multi-head attention from LLaMA 2 mapped to AMD NPU.
+
+3) Efficiency, Expressivity, and Extensibility in a Close-to-Metal NPU Programming Interface
+   - arXiv: https://arxiv.org/abs/2504.18430
+   - IEEE FCCM 2025: https://dblp.org/rec/conf/fccm/HunhoffMDBBNFLV25
+   - DOI: https://doi.org/10.1109/FCCM62733.2025.00043
+   - Relevance: IRON/MLIR-AIE stack for AMD Ryzen AI NPU programming (close-to-metal API/compiler flow).
+
+4) (Adjacent, ACM workshop) Programmer productivity and performance on AMD’s AI Engines: Offloading Fortran intrinsics via MLIR a case-study
+   - ACM workshop metadata: https://www.research.ed.ac.uk/en/publications/programmer-productivity-and-performance-on-amds-ai-engines-offloa/
+   - DOI: https://doi.org/10.1145/3731599.3767414
+   - Relevance: Explicitly lowers MLIR linear algebra dialect to AMD AIE dialects; not LLM-specific.
+
+5) (Adjacent, ACM FPGA 2025) Seamless Acceleration of Fortran Intrinsics via AMD AI Engines
+   - Metadata: https://www.research.ed.ac.uk/en/publications/seamless-acceleration-of-fortran-intrinsics-via-amd-ai-engines
+   - DOI: https://doi.org/10.1145/3706628.3708854
+   - Relevance: AMD AI Engines compiler path; useful adjacent compiler evidence, not LLM-specific.
+
+Citation signal notes:
+- Prior verified Scholar signal remains:
+  - ARIES (ACM FPGA 2025) showed "Cited by 2" during prior pass.
+- For newly added 2025-2026 papers, direct Scholar counts were not consistently exposed in accessible pages during this run.
+
+Conclusion:
+- Most new, direct Qualcomm/AMD NPU + MLIR + LLM papers are very recent preprints/workshop papers.
+- Strong conference-backed additions are currently concentrated on AMD NPU tooling (IEEE FCCM, ACM workshop tracks), while direct Qualcomm LLM+MLIR work is currently arXiv/workshop-heavy.

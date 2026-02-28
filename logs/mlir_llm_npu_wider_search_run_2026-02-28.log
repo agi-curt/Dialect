@@ -1,0 +1,100 @@
+Date: 2026-02-28
+Workspace: /home/agi-demo/Dialect
+Task: Execute the previously defined wider search space and return ranked candidate papers.
+
+Execution summary
+=================
+Performed 3-pass retrieval strategy:
+- Pass 1 (strict): MLIR + LLM + Qualcomm/AMD + NPU + on-device
+- Pass 2 (kernel-focused): MLIR + attention/prefill/decode/kernels + Qualcomm/AMD NPU
+- Pass 3 (toolchain-focused): MLIR dialect/compiler + Qualcomm/AMD NPU (LLM optional)
+
+Source coverage used
+====================
+- arXiv: direct paper pages and abstracts
+- ACM: DOI/venue validation via ACM DOIs and metadata mirrors (dblp/NSF PAR/research repositories)
+- IEEE: DOI/venue validation via IEEE DOI records and metadata mirrors (dblp/related indexed pages)
+- Google Scholar: Scholar lookups were attempted from arXiv and title queries; direct indexed result extraction was limited in this environment. Prior verified Scholar signal from earlier run retained for ARIES.
+
+Primary validated papers (strict and near-strict)
+=================================================
+1) Hexagon-MLIR: An AI Compilation Stack For Qualcomm's Neural Processing Units (NPUs)
+   - Source: https://arxiv.org/abs/2602.19762
+   - Type: arXiv preprint (2026)
+   - Evidence: Explicit MLIR-based compilation stack; targets Qualcomm Hexagon NPU; supports Triton/PyTorch lowering.
+   - Bucket: Pass 1 STRICT (MLIR+NPU+on-device AI; LLM context supported by seed context, not explicit in abstract wording)
+
+2) From Loop Nests to Silicon: Mapping AI Workloads onto AMD NPUs with MLIR-AIR
+   - Source: https://arxiv.org/abs/2510.14871
+   - Type: arXiv preprint (2025)
+   - Evidence: Introduces AIR dialect; AMD NPU target; includes multi-head attention block from LLaMA 2.
+   - Bucket: Pass 1 STRICT (MLIR dialect + AMD NPU + explicit LLM kernel)
+
+Additional papers from wider passes (adjacent enabling work)
+=============================================================
+3) ARIES: An Agile MLIR-Based Compilation Flow for Reconfigurable Devices with AI Engines
+   - Sources:
+     - ACM DOI: https://doi.org/10.1145/3706628.3708870
+     - DBLP: https://dblp.org/rec/conf/fpga/ZhuangXCZYMZ025.html
+     - NSF PAR summary: https://par.nsf.gov/biblio/10578863-aries-agile-mlir-based-compilation-flow-reconfigurable-devices-ai-engines
+   - Type: ACM FPGA 2025 conference paper
+   - Evidence: MLIR-based compiler flow; reports Ryzen-AI NPU acceleration (residual layer); not explicit LLM end-to-end in abstract.
+   - Bucket: Pass 2/3 ADJACENT
+
+4) Efficiency, Expressivity, and Extensibility in a Close-to-Metal NPU Programming Interface
+   - Sources:
+     - arXiv: https://arxiv.org/abs/2504.18430
+     - IEEE DOI: https://doi.org/10.1109/FCCM62733.2025.00043
+     - DBLP record: https://dblp.org/rec/conf/fccm/HunhoffMDBBNFLV25
+   - Type: IEEE FCCM 2025 conference paper
+   - Evidence: IRON/MLIR-AIE ecosystem for AMD Ryzen AI NPU programming; not explicit LLM benchmark focus.
+   - Bucket: Pass 3 ADJACENT
+
+5) Analyzing Latency Hiding and Parallelism in an MLIR-based AI Kernel Compiler
+   - Source: https://arxiv.org/abs/2602.20204
+   - Type: arXiv preprint; comments indicate acceptance at MLBench workshop (ASPLOS 2026)
+   - Evidence: MLIR pipeline optimizations for edge AI kernels; Qualcomm-associated authoring context; no explicit LLM workload.
+   - Bucket: Pass 2 ADJACENT
+
+6) Programmer productivity and performance on AMD’s AI Engines: Offloading Fortran intrinsics via MLIR a case-study
+   - Sources:
+     - DOI: https://doi.org/10.1145/3731599.3767414
+     - Metadata mirror: https://www.research.ed.ac.uk/en/publications/programmer-productivity-and-performance-on-amds-ai-engines-offloa/
+   - Type: SC Workshops 2025 (ACM)
+   - Evidence: Explicit lowering from MLIR linalg dialect to AMD AIE dialects; not LLM-specific.
+   - Bucket: Pass 3 ADJACENT
+
+7) Seamless Acceleration of Fortran Intrinsics via AMD AI Engines
+   - Sources:
+     - DOI: https://doi.org/10.1145/3706628.3708854
+     - Metadata mirror: https://www.research.ed.ac.uk/en/publications/seamless-acceleration-of-fortran-intrinsics-via-amd-ai-engines/
+   - Type: ACM FPGA 2025 conference paper
+   - Evidence: AMD AI Engine acceleration path; adjacent to MLIR-AIE/MLIR-AIR ecosystem, not LLM-specific.
+   - Bucket: Pass 3 ADJACENT
+
+Rejected / excluded during wider run
+====================================
+- mllm-NPU and other on-device LLM papers without explicit MLIR dialect/compiler implementation: excluded.
+- Riallto framework docs/tutorials: useful ecosystem context, but not a paper and not treated as a paper addition.
+- TaPaSCo-AIE and similar AI-engine framework papers: often relevant to AMD AIE, but explicit MLIR-dialect evidence for this task was insufficient from accessible abstracts.
+
+Ranking output from this run
+============================
+Conference-first + relevance ordering:
+A) Conference papers (highest priority)
+   1. ARIES (ACM FPGA 2025)
+   2. Efficiency, Expressivity, and Extensibility (IEEE FCCM 2025)
+   3. Seamless Acceleration of Fortran Intrinsics via AMD AI Engines (ACM FPGA 2025)
+   4. Programmer productivity and performance on AMD’s AI Engines (SC Workshops 2025, ACM)
+
+B) Preprints / workshop-accepted preprints
+   5. Hexagon-MLIR (arXiv 2026)
+   6. From Loop Nests to Silicon / MLIR-AIR (arXiv 2025)
+   7. Analyzing Latency Hiding and Parallelism (arXiv 2026; MLBench@ASPLOS note)
+
+Citation note
+=============
+- In this run, robust machine-readable citation extraction for all candidates was limited by source access constraints.
+- Prior verified Scholar signal retained from earlier run:
+  - ARIES was observed with Google Scholar "Cited by 2".
+- Most strict-match papers are recent (2025-2026), so citation counts are expected to be low/sparse.

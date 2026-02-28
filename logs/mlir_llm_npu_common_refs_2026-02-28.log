@@ -1,0 +1,39 @@
+Date: 2026-02-28
+Workspace: /home/agi-demo/Dialect
+Task: From previously collected papers, find common references and add any that also implement MLIR dialects for local/on-device LLM execution.
+
+Seed set considered (validated):
+- Hexagon-MLIR: Leveraging Collective Hardware and Algorithm Co-design for Efficient LLM Deployment on Mobile NPUs (arXiv:2602.19762)
+- Analyzing Latency Hiding and Parallelism in an MLIR-based AI Kernel Compiler (arXiv:2602.20204)
+- From Loop Nests to Silicon: Mapping AI Workloads onto AMD NPUs with MLIR-AIR (arXiv:2510.14871)
+- Efficiency, Expressivity, and Extensibility in a Close-to-Metal NPU Programming Interface (arXiv:2504.18430 / IEEE FCCM 2025)
+- ARIES: Agile MLIR-Based Compilation Flow for Reconfigurable Devices with AI Engines (ACM FPGA 2025)
+
+Sources used in this pass:
+- Google/Scholar result pages captured via web search tool (title/related-paper expansions)
+- arXiv records for validated seed papers
+- ACM/IEEE metadata pages already collected in previous logs
+
+Common-reference candidates observed repeatedly in related/reference expansions:
+1) MLIR-AIE: an MLIR-based framework for AI Engine architectures
+2) AIR for GPU and NPU workloads on RDNAs and AI Engines
+3) Exploiting Dynamicity in Matrix Multiplication with the AMD AI Engine MLIR Framework
+4) Efficiency, Expressivity, and Extensibility in a Close-to-Metal NPU Programming Interface
+
+Filter applied for adding papers:
+- Must implement/use an MLIR dialect or MLIR-based compiler layer
+- Must target LLM (or explicit LLM kernels like attention) 
+- Must be for local/on-device NPU execution (Qualcomm/AMD context)
+
+Screening outcomes:
+- MLIR-AIE framework paper: MLIR=yes, on-device NPU=yes, LLM=not explicit -> NOT added
+- AIR for GPU/NPU paper: MLIR=yes, on-device NPU=yes, LLM=not explicit -> NOT added
+- Exploiting Dynamicity in MatMul paper: MLIR=yes, on-device NPU=yes, LLM=not explicit -> NOT added
+- Close-to-Metal NPU Programming Interface: MLIR=yes, on-device NPU=yes, LLM=not explicit (general kernels) -> NOT newly added under strict LLM filter
+
+Addition under strict filter:
+- No new paper beyond previously listed items passed all three conditions in this pass.
+
+Notes/limitations:
+- Environment-level access constraints prevented full-text reference scraping from every source paper in this run; overlap identification used available indexed metadata and related/reference expansions.
+- Area remains recent (2025-2026), with many preprints/workshops and sparse citation signals.

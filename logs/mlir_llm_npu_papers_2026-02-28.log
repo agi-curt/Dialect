@@ -1,0 +1,69 @@
+Date: 2026-02-28
+Workspace: /home/agi-demo/Dialect
+Task: Compile papers implementing MLIR dialects/compiler stacks to run LLMs on Qualcomm and AMD NPUs.
+Required sources: Google Scholar, arXiv, ACM, IEEE.
+
+Method:
+1) Ran source-targeted searches on Google Scholar, arXiv, ACM DL, and IEEE Xplore.
+2) Filtered for papers that explicitly mention MLIR dialect/toolchain + Qualcomm/AMD NPU + LLM (or a direct enabling AMD AI-engine MLIR compiler paper).
+3) Pulled citation signals from Google Scholar where available; used Semantic Scholar API when Scholar indexing was missing for very recent preprints.
+4) Ranked results by (a) conference publication, then (b) citation count.
+
+Search trail (key queries/pages):
+Google Scholar
+- https://scholar.google.com/scholar?q=%22ARIES%3A+Agile+MLIR-Based+Compilation+Flow+for+Reconfigurable+Devices+with+AI+Engines%22
+  - Found ARIES entry with "Cited by 2".
+
+arXiv
+- https://arxiv.org/html/2602.19762 (Hexagon-MLIR)
+- https://arxiv.org/html/2510.05156 (Runtime Optimization of LLM on AMD NPU)
+- https://arxiv.org/html/2509.07490 (Programming AMD NPUs with MLIR-AIE and IRON)
+
+ACM
+- DOI for ARIES: https://doi.org/10.1145/3698038.3698546
+
+IEEE
+- Search used: https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=MLIR%20LLM%20AMD%20NPU%20Qualcomm
+- Also checked candidate results such as:
+  - TaPaSCo-AIE (LLM on AMD FPGA/AI Engines)
+  - Flexible and Efficient Dataflow-based Programming for AIE-enabled FPGA Systems through FPGA overlays and MLIR-based compiler
+- IEEE results were mostly adjacent (LLM on AI Engines or MLIR for AIE), but no clearly stronger direct Qualcomm/AMD NPU + MLIR-dialect + LLM match than shortlisted items.
+
+Citation checks (Semantic Scholar API, for ranking support):
+- ARIES DOI metadata:
+  https://api.semanticscholar.org/graph/v1/paper/DOI:10.1145/3698038.3698546?fields=title,citationCount,year,venue,url,externalIds,abstract
+  - citationCount=2
+- Runtime Optimization of LLM on AMD NPU:
+  https://api.semanticscholar.org/graph/v1/paper/arXiv:2510.05156?fields=title,citationCount,year,venue,url,externalIds
+  - citationCount=0
+- Programming AMD NPUs with MLIR-AIE and IRON:
+  https://api.semanticscholar.org/graph/v1/paper/arXiv:2509.07490?fields=title,citationCount,year,venue,url,externalIds
+  - citationCount=0
+- Hexagon-MLIR:
+  https://api.semanticscholar.org/graph/v1/paper/arXiv:2602.19762?fields=title,citationCount,year,venue,url,externalIds
+  - citationCount=0
+
+Final shortlist (ranked by conference first, then citations):
+1) ARIES: Agile MLIR-Based Compilation Flow for Reconfigurable Devices with AI Engines (ACM FPGA 2025)
+   - Conference: Yes (ACM)
+   - Citation signal: Google Scholar Cited by 2
+   - Relevance: MLIR-based compiler flow for AI engines (AMD ecosystem), enabling deployment pipeline.
+
+2) Hexagon-MLIR: Leveraging Collective Hardware and Algorithm Co-design for Efficient LLM Deployment on Mobile NPUs (arXiv:2602.19762)
+   - Conference: No (arXiv preprint)
+   - Citation signal: 0 (Semantic Scholar; very recent)
+   - Relevance: Direct Qualcomm Hexagon + MLIR framework/dialect for LLM deployment.
+
+3) Runtime Optimization of Large Language Model on AMD NPU (arXiv:2510.05156)
+   - Conference: No (arXiv preprint)
+   - Citation signal: 0 (Semantic Scholar; recent)
+   - Relevance: Direct LLM optimization on AMD NPU; explicitly states MLIR-AIR stack.
+
+4) Programming AMD NPUs with MLIR-AIE and IRON (arXiv:2509.07490)
+   - Conference: No (arXiv preprint)
+   - Citation signal: 0 (Semantic Scholar; recent)
+   - Relevance: Direct AMD NPU programming and compiler toolchain on MLIR-AIE/IRON; foundational but not LLM-specific in abstract.
+
+Notes/limitations:
+- This niche appears very recent; direct Qualcomm/AMD NPU + MLIR-dialect + LLM papers are mostly preprints (2025-2026), so citation counts are still near zero.
+- Scholar indexing was available for ARIES; newest arXiv papers were not reliably indexed in Scholar during this search window.

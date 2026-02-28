@@ -1,0 +1,69 @@
+Date: 2026-02-28
+Workspace: /home/agi-demo/Dialect
+Task: Expand prior search to publication years 2023-2024.
+
+Scope and filter
+================
+Primary inclusion (strict):
+- MLIR dialect or MLIR-based compiler implementation
+- Local/on-device LLM execution
+- Qualcomm or AMD NPU target
+
+Secondary inclusion (adjacent):
+- MLIR-based compiler/programming model for AMD/Qualcomm NPU-like AI Engine hardware,
+  even if LLM is not explicit.
+
+Sources checked
+===============
+- arXiv pages and arXiv-indexed mirrors
+- ACM-indexed conference/journal records via DBLP/DOI metadata
+- IEEE-indexed conference records via DBLP/DOI metadata
+- Google Scholar links via DBLP "ask others" entries (direct scraping constrained)
+
+Key records validated in 2023-2024 window
+=========================================
+A) Adjacent enabling work (kept in search graph)
+1) CHARM: Composing Heterogeneous AcceleRators for Matrix Multiply on Versal ACAP Architecture (ACM FPGA 2023)
+   - DOI: https://doi.org/10.1145/3543622.3573210
+   - DBLP: https://dblp.org/rec/conf/fpga/ZhuangLYYDLDNJH23
+   - Notes: deep-learning workloads incl. BERT on Versal AI Engine architecture; strong precursor to later ARIES/MLIR-AIE ecosystem, but title/metadata do not explicitly claim an MLIR dialect.
+
+2) CHARM 2.0: Composing Heterogeneous Accelerators for Deep Learning on Versal ACAP Architecture (ACM TRETS 2024)
+   - DOI (as listed by institutional metadata): https://doi.org/10.1145/3686163
+   - DBLP metadata reference (author page extraction):
+     https://dblp.org/rec/journals/trets/ZhuangLYYJLDNJHSCCZ24
+   - Notes: deep-learning compiler/framework continuation on Versal; adjacent enabling paper.
+
+3) An End-to-End Programming Model for AI Engine Architectures (HEART 2024, ACM)
+   - DBLP: https://dblp.org/rec/conf/heart/LeventalKCCNF24
+   - Venue TOC: https://dblp.org/db/conf/heart/heart2024
+   - Notes: directly relevant AI Engine programming model; metadata does not explicitly state LLM focus.
+
+4) MLIR-Based Homomorphic Encryption Compiler for GPU (HEART 2024, ACM)
+   - DOI: https://doi.org/10.1145/3665283.3665343
+   - DBLP: https://dblp.org/rec/conf/heart/NozakiKNT24
+   - Notes: explicit MLIR compiler, but GPU+homomorphic-encryption domain; not NPU/LLM.
+
+B) Relevant but excluded from strict MLIR filter
+1) Fast On-device LLM Inference with NPUs (2024)
+   - arXiv: https://arxiv.org/abs/2407.05858
+   - Conference DOI surfaced in indexed metadata: https://doi.org/10.1145/3669940.3707239
+   - Notes: strong on-device LLM+NPU paper, but no explicit MLIR dialect/compiler implementation in accessible metadata.
+
+2) Qualcomm on-device stacks and app notes (LiteRT/QNN/Genie)
+   - Useful ecosystem evidence but not research papers with MLIR-dialect implementation details in 2023-2024.
+
+Outcome for 2023-2024 under strict filter
+==========================================
+- Added strict matches: NONE.
+- Reason: In 2023-2024, evidence is mostly precursor toolchain/programming work on AMD AI Engines and separate on-device LLM NPU systems that do not explicitly document MLIR-dialect implementation for Qualcomm/AMD NPU LLM deployment.
+
+What this means for the master list
+===================================
+- Strict list remains anchored by 2025-2026 papers (Hexagon-MLIR, MLIR-AIR NPU LLM-kernel mapping, etc.).
+- 2023-2024 contributes high-value adjacent compiler papers that should be retained for citation/snowball expansion.
+
+Quality notes
+=============
+- Some direct venue pages (notably IEEE Xplore and dynamic Google Scholar views) were not fully crawlable in this environment; DBLP + DOI metadata was used as primary verification path.
+- Citation counts for 2023-2024 additions were not reliably extractable from accessible Scholar pages in this run.
